@@ -269,6 +269,8 @@ def faster_array_repr(array: jax.Array) -> str:
   jnp = jax.numpy
   if array.size < np.get_printoptions()["threshold"]:
     return repr(array)
+  if jax.dtypes.issubdtype(array.dtype, jax.dtypes.prng_key):
+    return repr(array)
 
   if array.aval is not None and array.aval.weak_type:
     dtype_str = f"dtype={array.dtype.name}, weak_type=True)"
